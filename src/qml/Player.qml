@@ -7,6 +7,7 @@ PlayerTouchHandler {
 	width: parent.width * 0.03
 	height: parent.height * 0.2
 	y: (parent.height - height) / 2
+    focus: true
 
 	Rectangle {
 		id: paddle

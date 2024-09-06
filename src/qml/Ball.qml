@@ -1,15 +1,26 @@
 import QtQuick
 
 Image {
-    source: "qrc:/pongball.png"
+    id: root
+
 	property real horizontalSpeed: parent.width * 0.006;
 	property real verticalSpeed: parent.width * 0.006
 	property real dimensionRatio: 0.04
 	property real speedRatio: 0.006
 	property Item playerOne
 	property Item playerTwo
+
+    source: "qrc:/pongball.png"
 	width: parent.width * dimensionRatio
 	height: parent.width * dimensionRatio
+
+
+    function resetBall() {
+        x = (parent.width - width) / 2
+        y = (parent.height - height) / 2
+        horizontalSpeed = parent.width * speedRatio
+        verticalSpeed = parent.height * speedRatio
+    }
 
 	transform: Rotation {
 		id: ballRotation

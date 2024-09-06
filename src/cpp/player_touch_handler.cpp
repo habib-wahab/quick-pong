@@ -4,6 +4,7 @@ PlayerTouchHandler::PlayerTouchHandler(QQuickItem *parent) : QQuickItem(parent)
 {
 	setAcceptedMouseButtons(Qt::LeftButton);
 	setAcceptTouchEvents(true);
+
 }
 
 void PlayerTouchHandler::touchEvent(QTouchEvent *event)
@@ -31,4 +32,10 @@ void PlayerTouchHandler::mouseMoveEvent(QMouseEvent *event)
 	qreal initial_new_y = event->globalPosition().y() + y_offset_;
 	qreal bounded_new_y = std::min(std::max(initial_new_y, (qreal)0.0), limit_y);
 	this->setY(bounded_new_y);
+}
+
+void PlayerTouchHandler::movePaddle(int dy)
+{
+    y_offset_ += dy;
+    setY(y() + dy);
 }
