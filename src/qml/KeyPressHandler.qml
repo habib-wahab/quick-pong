@@ -8,6 +8,8 @@ Item {
 
     required property Player playerOne
     required property Player playerTwo
+    required property Timer timer
+
     property bool keyWPressed: false
     property bool keySPressed: false
     property bool keyUpPressed: false
@@ -38,6 +40,9 @@ Item {
         repeat: true
         running: true
         onTriggered: {
+            if (!root.timer.running) {
+                return
+            }
             if (root.keyWPressed && playerOne.y > 0) {
                 root.playerOne.movePaddle(-10);
             }

@@ -3,6 +3,7 @@ import QtQuick
 Image {
     id: root
 
+    property alias timer: ballTimer
 	property real horizontalSpeed: parent.width * 0.006;
 	property real verticalSpeed: parent.width * 0.006
 	property real dimensionRatio: 0.04

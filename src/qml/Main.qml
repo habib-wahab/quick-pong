@@ -30,18 +30,21 @@ Window {
     KeyPressHandler {
         playerOne: playerOne
         playerTwo: playerTwo
+        timer: ball.timer
     }
 
     Player {
         id: playerOne
         paddleColor: "white"
         x: 0
+        enabled: ball.timer.running
     }
 
     Player {
         id: playerTwo
         paddleColor: "white"
         x: parent.width - width
+        enabled: ball.timer.running
     }
 
     Ball {

@@ -6,8 +6,7 @@
 PlayerTouchHandler::PlayerTouchHandler(QQuickItem *parent) : QQuickItem(parent)
 {
 	setAcceptedMouseButtons(Qt::LeftButton);
-	setAcceptTouchEvents(true);
-
+    setAcceptTouchEvents(true);
 }
 
 void PlayerTouchHandler::touchEvent(QTouchEvent *event)
