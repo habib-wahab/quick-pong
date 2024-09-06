@@ -16,5 +16,11 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
-    qreal y_offset_;
+    qreal m_yOffset;
+    qreal m_lastYPosition;
+    qreal m_lastUpdateTime;
+
+    qreal lerp(qreal a, qreal b, qreal t) {
+        return a + t * (b - a);
+    }
 };
