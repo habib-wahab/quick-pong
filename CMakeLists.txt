@@ -19,6 +19,7 @@ qt_add_executable(appquick-pong
 qt_add_qml_module(appquick-pong
     URI quick-pong
     VERSION 1.0
+    NO_CACHEGEN
     QML_FILES src/qml/Main.qml src/qml/Player.qml src/qml/Ball.qml src/qml/KeyPressHandler.qml
 )
 
