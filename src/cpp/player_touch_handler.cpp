@@ -5,7 +5,7 @@
 
 PlayerTouchHandler::PlayerTouchHandler(QQuickItem *parent) : QQuickItem(parent)
 {
-	setAcceptedMouseButtons(Qt::LeftButton);
+    setAcceptedMouseButtons(Qt::LeftButton);
     setAcceptTouchEvents(true);
 }
 
@@ -15,45 +15,43 @@ void PlayerTouchHandler::touchEvent(QTouchEvent *event)
         return;
     }
 
-    const QTouchEvent::TouchPoint& touch = event->points().first();
-
-    qreal current_time = QDateTime::currentMSecsSinceEpoch() / 1000.0;
+    const QTouchEvent::TouchPoint &touch = event->points().first();
+    qreal currentTime = QDateTime::currentMSecsSinceEpoch() / 1000.0;
 
     if (event->type() == QEvent::TouchBegin) {
         m_yOffset = y() - touch.position().y();
         m_lastYPosition = touch.position().y();
-        m_lastUpdateTime = current_time;
+        m_lastUpdateTime = currentTime;
     }
 
-    qreal delta_time = current_time - m_lastUpdateTime;
+    qreal deltaTime = currentTime - m_lastUpdateTime;
+    const qreal smoothingFactor = 0.2;
+    qreal targetY = touch.position().y() + m_yOffset;
+    qreal smoothedY = lerp(y(), targetY, smoothingFactor * deltaTime * 60.0);
 
-    const qreal smoothing_factor = 0.2;
-    qreal target_y = touch.position().y() + m_yOffset;
-    qreal smoothed_y = lerp(y(), target_y, smoothing_factor * delta_time * 60.0);
+    qreal limitY = parentItem()->height() - height();
+    qreal boundedY = qBound(0.0, smoothedY, limitY);
 
-    qreal limit_y = parentItem()->height() - height();
-    qreal bounded_y = qBound(0.0, smoothed_y, limit_y);
-
-    setY(bounded_y);
+    setY(boundedY);
 
     m_lastYPosition = touch.position().y();
-    m_lastUpdateTime = current_time;
+    m_lastUpdateTime = currentTime;
 
     event->accept();
 }
 
 void PlayerTouchHandler::mousePressEvent(QMouseEvent *event)
 {
-	m_yOffset = y() - event->globalPosition().y();
-	event->accept();
+    m_yOffset = y() - event->globalPosition().y();
+    event->accept();
 }
 
 void PlayerTouchHandler::mouseMoveEvent(QMouseEvent *event)
 {
-	qreal limit_y = this->parentItem()->height() - this->height();
-	qreal initial_new_y = event->globalPosition().y() + m_yOffset;
-	qreal bounded_new_y = std::min(std::max(initial_new_y, (qreal)0.0), limit_y);
-	this->setY(bounded_new_y);
+    qreal limitY = this->parentItem()->height() - this->height();
+    qreal initialNewY = event->globalPosition().y() + m_yOffset;
+    qreal boundedNewY = std::min(std::max(initialNewY, 0.0), limitY);
+    setY(boundedNewY);
 }
 
 void PlayerTouchHandler::movePaddle(int dy)
